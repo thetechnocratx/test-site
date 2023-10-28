@@ -4,34 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class Routine Checker</title>
+    <title>Fiscal Year Selection</title>
     <link rel="stylesheet" href="routine.css">
+    <style>
+        /* Your existing styles here */
+    </style>
 </head>
 
 <body>
+
     <header>
         <h1>Class Routine Checker</h1>
     </header>
-
+    <br>
     <nav>
         <a href="index.html">Home</a>
         <a href="about.html">About Us</a>
-        <a href="mailto:thetechnocrat100@email.com">Feedback</a>
+        <a href=mailto:<nowiki thetechnocrat100@email.com>feedback</nowiki></a>
     </nav>
 
-    <form id="myForm">
-        <label for="departmentSelect">Choose Department:</label>
-        <select id="departmentSelect">
+    <form id="myForm" onsubmit="displayImage(); return false;">
+
+        <label for="sySelect">Choose Department:</label>
+        <select id="sySelect" name="sySelect" onchange="updateTypeOptions()">
             <option value="sy1">SY1</option>
             <option value="sy2">SY2</option>
             <option value="sy3">SY3</option>
         </select>
 
-        <label for="batchSelect">Select Batch:</label>
-        <select id="batchSelect"></select>
+        <label for="typeSelect">Select Batch:</label>
+        <select id="typeSelect" name="typeSelect"></select>
 
         <label for="daySelect">Choose a Day:</label>
-        <select id="daySelect">
+        <select id="daySelect" name="daySelect">
             <option value="monday">Monday</option>
             <option value="tuesday">Tuesday</option>
             <option value="wednesday">Wednesday</option>
@@ -43,22 +48,133 @@
         <input type="submit" value="Submit">
     </form>
 
+    <!-- Display the image based on the selections -->
     <img id="selectedImage" src="" alt="Selected Image">
 
     <div class="button-container">
-        <button id="prevDayButton">Previous Day</button>
-        <button id="nextDayButton">Next Day</button>
+        <button onclick="prevDay()">&#8249; Previous Day</button>
+        <button onclick="nextDay()">Next Day &#8250;</button>
     </div>
 
+    <!-- Buttons for Type and Day -->
     <div class="button-container">
-        <button id="prevBatchButton">Previous Batch</button>
-        <button id="nextBatchButton">Next Batch</button>
+        <button onclick="prevType()">&#8249; Previous Batch</button>
+        <button onclick="nextType()">Next Batch &#8250;</button>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        var currentIndex = 0; // Index to track the current image for the selected day
+        var currentTypeIndex = 0; // Index to track the current type
 
+        function updateTypeOptions() {
+            var sySelect = document.getElementById("sySelect");
+            var typeSelect = document.getElementById("typeSelect");
+
+            // Clear existing options
+            typeSelect.innerHTML = "";
+
+            // Add new options based on the selected fiscal year
+            if (sySelect.value === "sy1") {
+                addOption(typeSelect, "a1", "A1");
+                addOption(typeSelect, "a2", "A2");
+                addOption(typeSelect, "a3", "A3");
+                addOption(typeSelect, "a4", "A4");
+                addOption(typeSelect, "a5", "A5");
+                addOption(typeSelect, "a6", "A6");
+                addOption(typeSelect, "a7", "A7");
+                addOption(typeSelect, "a8", "A8");
+            } else if (sySelect.value === "sy2") {
+                addOption(typeSelect, "b1", "B1");
+                addOption(typeSelect, "b2", "B2");
+                addOption(typeSelect, "b3", "B3");
+                addOption(typeSelect, "b4", "B4");
+                addOption(typeSelect, "b5", "B5");
+                addOption(typeSelect, "b6", "B6");
+                addOption(typeSelect, "b7", "B7");
+                addOption(typeSelect, "b8", "B8");
+                addOption(typeSelect, "d1", "D1");
+                addOption(typeSelect, "d2", "D2");
+            } else if (sySelect.value === "sy3") {
+                addOption(typeSelect, "c1", "c1");
+                addOption(typeSelect, "c2", "c2");
+                addOption(typeSelect, "c3", "c3");
+                addOption(typeSelect, "c4", "c4");
+                addOption(typeSelect, "c5", "c5");
+                addOption(typeSelect, "c6", "c6");
+                addOption(typeSelect, "c7", "c7");
+                addOption(typeSelect, "c8", "c8");
+                addOption(typeSelect, "c9", "c9");
+            }
+            updateType(); // Update type immediately after options change
+        }
+
+        function addOption(select, value, text) {
+            var option = document.createElement("option");
+            option.value = value;
+            option.text = text;
+            select.add(option);
+        }
+
+        function displayImage() {
+            var selectedType = document.getElementById("typeSelect").value;
+            var selectedDay = document.getElementById("daySelect").value;
+
+            // Convert selectedType to uppercase and construct the image source
+            var imageSource = selectedType + "_" + selectedDay + "_" + currentIndex + ".JPG";
+
+            // Update the image source
+            document.getElementById("selectedImage").src = imageSource;
+        }
+
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % 3; // Assuming you have 3 images per day
+            displayImage();
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + 3) % 3; // Assuming you have 3 images per day
+            displayImage();
+        }
+
+        function nextType() {
+            currentTypeIndex = (currentTypeIndex + 1) % 8; // Assuming you have 3 types
+            updateType();
+        }
+
+        function prevType() {
+            currentTypeIndex = (currentTypeIndex - 1 + 8) % 8; // Assuming you have 3 types
+            updateType();
+        }
+
+        function nextDay() {
+            var daySelect = document.getElementById("daySelect");
+            var currentDayIndex = daySelect.selectedIndex;
+            daySelect.selectedIndex = (currentDayIndex + 1) % daySelect.options.length;
+            displayImage();
+        }
+
+        function prevDay() {
+            var daySelect = document.getElementById("daySelect");
+            var currentDayIndex = daySelect.selectedIndex;
+            daySelect.selectedIndex = (currentDayIndex - 1 + daySelect.options.length) % daySelect.options.length;
+            displayImage();
+        }
+
+        function updateType() {
+            var typeSelect = document.getElementById("typeSelect");
+            typeSelect.selectedIndex = currentTypeIndex;
+            displayImage();
+        }
+
+        // Call the function to initialize the options based on the default selection
+        updateTypeOptions();
+    </script>
     <footer>
-        <p>&copy; 2023 College Notes. All rights reserved.</p>
+        <!-- <p>&copy; 2023 College Notes. All rights reserved.</p> -->
+        <a style="color: white;" href="rights.html" All rights reserved target="_blank">
+            <p>&copy; 2023 College Notes. All rights reserved.</p>
+        </a>
     </footer>
 </body>
 
