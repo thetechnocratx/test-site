@@ -92,6 +92,8 @@
                 addOption(typeSelect, "B6", "B6");
                 addOption(typeSelect, "B7", "B7");
                 addOption(typeSelect, "B8", "B8");
+                addOption(typeSelect, "D1", "D1");
+                addOption(typeSelect, "D2", "D2");
             } else if (sySelect.value === "sy3") {
                 addOption(typeSelect, "c1", "c1");
                 addOption(typeSelect, "c2", "c2");
@@ -117,12 +119,13 @@
             var selectedType = document.getElementById("typeSelect").value;
             var selectedDay = document.getElementById("daySelect").value;
 
-            // Construct the image source based on the selected type, day, and currentIndex
-            var imageSource = "timetable/" + selectedType + "_" + selectedDay + "_" + currentIndex + ".jpg";
+            // Convert selectedType to uppercase and construct the image source
+            var imageSource = "timetable/" + selectedType.toUpperCase() + "_" + selectedDay + "_" + currentIndex + ".JPG";
 
             // Update the image source
             document.getElementById("selectedImage").src = imageSource;
         }
+
 
         function nextImage() {
             currentIndex = (currentIndex + 1) % 3; // Assuming you have 3 images per day
