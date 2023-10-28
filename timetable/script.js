@@ -6,12 +6,12 @@ const prevDayButton = document.getElementById("prevDayButton");
 const nextDayButton = document.getElementById("nextDayButton");
 const prevBatchButton = document.getElementById("prevBatchButton");
 const nextBatchButton = document.getElementById("nextBatchButton");
-
 const departments = {
-    sy1: ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"],
-    sy2: ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "D1", "D2"],
-    sy3: ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9"],
+    sy1: ["a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8"],
+    sy2: ["b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "d1", "d2"],
+    sy3: ["c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9"],
 };
+
 
 let currentDepartment = departmentSelect.value;
 let currentBatchIndex = 0;
